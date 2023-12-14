@@ -19,10 +19,10 @@ namespace CaseStudy_1.Models
         public string? LastName { get; set; }
 
         [JsonProperty("totalprice")]
-        public int? TotalPrice { get; set; }
+        public string? TotalPrice { get; set; }
 
         [JsonProperty("depositpaid")]
-        public int? DepositPaid { get; set; }
+        public string? DepositPaid { get; set; }
 
         [JsonProperty("bookingdates")]
         public BookingDates BookingDates { get; set; }

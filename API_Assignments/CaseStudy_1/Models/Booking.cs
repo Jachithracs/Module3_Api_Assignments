@@ -13,6 +13,6 @@ namespace CaseStudy_1.Models
         public string? BookingId { get; set; }
 
         [JsonProperty("booking")]
-        public BookingDetails? BookingDetails { get; set; }
+        public BookingDetails BookingDetails { get; set; }
     }
 }

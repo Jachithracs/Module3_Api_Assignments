@@ -11,6 +11,7 @@ namespace CaseStudy_1.Models
     {
         [JsonProperty("checkin")]
         public string? CheckIn { get; set; }
+
         [JsonProperty("checkout")]
         public string? CheckOut { get; set; }
     }

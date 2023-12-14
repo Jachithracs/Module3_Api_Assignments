@@ -1,0 +1,26 @@
+2023-12-14 20:44:12.105 +05:30 [INF] GetToken Test Started
+2023-12-14 20:44:13.649 +05:30 [INF] Request Intitiated
+2023-12-14 20:44:13.658 +05:30 [INF] Succees Response Recieved
+2023-12-14 20:44:13.661 +05:30 [INF] Get All Booking id Test Started
+2023-12-14 20:44:14.805 +05:30 [INF] Status code test passed
+2023-12-14 20:44:14.807 +05:30 [INF] Booking id data test passed
+2023-12-14 20:44:14.808 +05:30 [INF] GetSingleBookingId Test Started
+2023-12-14 20:44:15.230 +05:30 [INF] API Response: {"firstname":"Jim","lastname":"Ericsson","totalprice":498,"depositpaid":false,"bookingdates":{"checkin":"2019-11-09","checkout":"2021-01-28"}}
+2023-12-14 20:44:15.233 +05:30 [INF] User returned
+2023-12-14 20:44:15.234 +05:30 [INF] User FirstName matches with fetch
+2023-12-14 20:44:15.234 +05:30 [INF] User lastName matches with fetch
+2023-12-14 20:44:15.234 +05:30 [INF] User DepositPaid matches with fetch
+2023-12-14 20:44:15.235 +05:30 [INF] CreatingBooking Test Started
+2023-12-14 20:44:16.717 +05:30 [INF] API Response :{"bookingid":1260,"booking":{"firstname":"John","lastname":"Smith","totalprice":111,"depositpaid":true,"bookingdates":{"checkin":"2018-01-01","checkout":"2019-01-01"},"additionalneeds":"Breakfast"}
+2023-12-14 20:44:16.717 +05:30 [INF] CreatingBooking test passed all Asserts
+2023-12-14 20:44:16.718 +05:30 [INF] GetToken Test Started
+2023-12-14 20:44:16.718 +05:30 [INF] Token Generated
+2023-12-14 20:44:17.193 +05:30 [INF] Update Booking test started
+2023-12-14 20:44:17.193 +05:30 [INF] At header added cookie with token value
+2023-12-14 20:44:17.433 +05:30 [INF] Update Booking test passed
+2023-12-14 20:44:17.434 +05:30 [INF] DeleteBooking Test started
+2023-12-14 20:44:17.434 +05:30 [INF] Token Generated
+2023-12-14 20:44:17.855 +05:30 [INF] At header added cookie with token value
+2023-12-14 20:44:18.091 +05:30 [INF] Status code test passed
+2023-12-14 20:44:18.091 +05:30 [INF] Booking id data test passed
+2023-12-14 20:44:18.091 +05:30 [INF] DeleteBooking test passed all Asserts

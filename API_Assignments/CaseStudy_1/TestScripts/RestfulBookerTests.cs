@@ -18,6 +18,7 @@ namespace CaseStudy_1.TestScripts
         public void GetTokenTest()
         {
             test = extent.CreateTest("GetToken Test");
+            Log.Information("GetToken Test Started");
             var request = new RestRequest("auth", Method.Post);
             request.AddHeader("Content-Type", "application/json");
             request.AddJsonBody(new
@@ -38,15 +39,14 @@ namespace CaseStudy_1.TestScripts
             }
             catch (AssertionException ex)
             {
-                string message = ex.Message;
-                Log.Error(message);
-                test.Fail(message + " GetTokenTest Fail");
+                test.Fail("GetToken test failed");
             }
         }
         [Test,Order(1)]
-        public void GetAllBookingId()
+        public void GetAllBookingIdTest()
         {
             test = extent.CreateTest("Get All Booking id test");
+            Log.Information("Get All Booking id Test Started");
             var request = new RestRequest("booking", Method.Get);
             try
             {
@@ -59,18 +59,51 @@ namespace CaseStudy_1.TestScripts
                 test.Pass("Booking id data test pass");
                 Log.Information("Booking id data test passed");
             }
-            catch (AssertionException ex)
+            catch (AssertionException)
             {
-                string message = ex.Message;
-                Log.Error(message);
-                test.Fail(message + " Get All Booking id  Fail");
+                test.Fail("Get All Booking id test failed");
+            }
+        }
+        [Test,Order(2)]
+        public void GetSingleBookingIdTest()
+        {
+            test = extent.CreateTest("Get Single Booking Id");
+            Log.Information("GetSingleBookingId Test Started");
+
+            var request = new RestRequest("booking/1", Method.Get);
+            request.AddHeader("Accept", "application/json");
+            var response = client.Execute(request);
+
+            try
+            {
+                Assert.That(response.StatusCode, Is.EqualTo(System.Net.HttpStatusCode.OK));
+                Log.Information($"API Response: {response.Content}");
+
+                var user = JsonConvert.DeserializeObject<BookingDetails>(response.Content);
+
+                Assert.NotNull(user);
+                Log.Information("User returned");
+                Assert.IsNotEmpty(user.FirstName);
+                Log.Information("User FirstName matches with fetch");
+                Assert.IsNotEmpty(user.LastName);
+                Log.Information("User lastName matches with fetch");
+                Assert.IsNotEmpty(user.DepositPaid);
+                Log.Information("User DepositPaid matches with fetch");
+
+
+                test.Pass("GetSingleBookingIdTest passed all Asserts.");
+            }
+            catch (AssertionException)
+            {
+                test.Fail("GetSingleBookingId test failed");
             }
         }
 
         [Test,Order(3)]
-        public void UpdateUserTest()
+        public void UpdateBookingTest()
         {
             test = extent.CreateTest("GetToken Test");
+            Log.Information("GetToken Test Started");
             var request = new RestRequest("auth", Method.Post);
             request.AddHeader("Content-Type", "application/json");
             request.AddJsonBody(new
@@ -78,16 +111,18 @@ namespace CaseStudy_1.TestScripts
                 username = "admin",
                 password = "password123"
             });
+            Log.Information("Token Generated");
             try
             {
                 var response = client.Execute(request);
 
                 var token = JsonConvert.DeserializeObject<Cookies>(response.Content);
+                Log.Information("Update Booking test started");
                 var requestput = new RestRequest("booking/13", Method.Put);
                 requestput.AddHeader("Content-Type", "application/json");
                 requestput.AddHeader("Accept", "application/json");
                 requestput.AddHeader("Cookie", "token=" + token.Token);
-
+                Log.Information("At header added cookie with token value");
 
                 requestput.AddJsonBody(new
                 {
@@ -104,15 +139,19 @@ namespace CaseStudy_1.TestScripts
                 });
                 var responseput = client.Execute(requestput);
                 Assert.That(responseput.StatusCode, Is.EqualTo(System.Net.HttpStatusCode.OK), "Status code is not 200");
+                Log.Information("Update Booking test passed");
                 Console.WriteLine(responseput.Content);
             }
-            catch (AssertionException ex) { }
+            catch (AssertionException) 
+            {
+                test.Fail("Update Booking test failed");
+            }
 
         }
 
 
         [Test,Order(2)]
-        public void CreateUserTest()
+        public void CreateBookingTest()
         {
             try
             {
@@ -136,6 +175,7 @@ namespace CaseStudy_1.TestScripts
                     },
                     additionalneeds = "Breakfast"
                 });
+                Log.Information("CreatingBooking Test Started");
                 var responseput = client.Execute(requestput);
                 var bookingObject = JsonConvert.DeserializeObject<Booking>(responseput.Content);
                 var bookingDetailsObject = bookingObject.BookingDetails;
@@ -143,18 +183,23 @@ namespace CaseStudy_1.TestScripts
                 Console.WriteLine(bookingDetailsObject.FirstName);
                 Console.WriteLine(responseput.Content);
                 Assert.That(responseput.StatusCode, Is.EqualTo(System.Net.HttpStatusCode.OK), "Status code is not 200");
-            }
-            catch (AssertionException ex)
-            {
+                Log.Information($"API Response :{responseput.Content}");
+                Log.Information("CreatingBooking test passed all Asserts");
 
+                test.Pass("CreatingBooking test passed all Asserts.");
+
+            }
+            catch (AssertionException)
+            {
+                test.Fail("CreatingBooking test failed");
             }
         }
         [Test,Order(4)]
-        public void DeleteUserTest()
+        public void DeleteBookingTest()
         {
 
             test = extent.CreateTest("Delete Booking test");
-            ;
+            Log.Information("DeleteBooking Test started");
             var requestAuth = new RestRequest("auth", Method.Post);
             requestAuth.AddHeader("Content-Type", "application/json");
             requestAuth.AddJsonBody(new
@@ -162,24 +207,27 @@ namespace CaseStudy_1.TestScripts
                 username = "admin",
                 password = "password123"
             });
+            Log.Information("Token Generated");
             var request = new RestRequest("booking/11", Method.Delete);
             try
             {
                 var responseAuth = client.Execute(requestAuth);
                 var token = JsonConvert.DeserializeObject<Cookies>(responseAuth.Content);
                 request.AddHeader("Cookie", "token=" + token.Token);
+                Log.Information("At header added cookie with token value");
                 var response = client.Execute(request);
                 Assert.That(response.StatusCode, Is.EqualTo(System.Net.HttpStatusCode.Created), "Status code is not 200");
                 test.Pass("Status code test pass");
                 Log.Information("Status code test passed");
                 test.Pass("Booking id data test pass");
                 Log.Information("Booking id data test passed");
+                Log.Information("DeleteBooking test passed all Asserts");
+
+                test.Pass("DeleteBooking test passed all Asserts.");
             }
-            catch (AssertionException ex)
+            catch (AssertionException)
             {
-                string message = ex.Message;
-                Log.Error(message);
-                test.Fail(message + " Get All Booking id  Fail");
+                test.Fail("DeleteBooking test failed");
             }
         }
 
